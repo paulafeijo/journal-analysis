@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code and PyCharm settings
+.vscode/
+.idea/
+
+# Mac & Linux
+.DS_Store
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Unit test cache
+.pytest_cache/
+
+# MyPy and other analysis tools
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# Data files and exports (custom)
+data/raw/
+*.csv
+*.tsv
+*.json
+*.xlsx
+
+# Notebooks outputs (optional)
+*.nbconvert.ipynb
+
+# Environment configs
+.env
+.env.*
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
