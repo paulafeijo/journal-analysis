@@ -1,10 +1,22 @@
-# 📊 Journal Analysis for Open Access Insights
+# 🧠 Journal Analysis Project
 
-**FastAPI-based backend and data pipeline for analyzing Open Access publication patterns at the institutional level.**
+A full-stack data pipeline for retrieving, storing, and analyzing academic article metadata — powered by **FastAPI**, **PostgreSQL**, and a **Power BI** dashboard.
 
 This project is currently focused on extracting and analyzing journal publication data to uncover trends in Open Access (OA) publishing. A backend service for extracting, storing, and analyzing academic article metadata using FastAPI and PostgreSQL.
 
-> 📌 *Note: This is an early-stage version of the project. Integration with a database and full publication system is planned for future development.*
+This project is designed to:
+- **Backend**: Extract and store metadata from academic articles (e.g., title, authors, abstract) using a FastAPI service and SQLAlchemy ORM.
+- **Database**: Store structured metadata in a PostgreSQL database.
+- **Frontend**: Visualize insights via an interactive Power BI dashboard (planned).
+
+## 🛠 Tech Stack
+
+| Layer     | Tech                  |
+|-----------|-----------------------|
+| Backend   | FastAPI, SQLAlchemy   |
+| Database  | PostgreSQL            |
+| Frontend  | Power BI (planned)    |
+| Dev Tools | VSCode, Terminal      |
 
 🚀 Project Overview
 This project is designed to:
