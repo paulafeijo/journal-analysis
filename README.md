@@ -2,7 +2,7 @@
 
 A full-stack data pipeline for retrieving, storing, and analyzing academic article metadata — powered by **FastAPI**, **PostgreSQL**, and a **Power BI** dashboard.
 
-This project is currently focused on extracting and analyzing journal publication data to uncover trends in Open Access (OA) publishing. A backend service for extracting, storing, and analyzing academic article metadata using FastAPI and PostgreSQL.
+## 📌 Overview
 
 This project is designed to:
 - **Backend**: Extract and store metadata from academic articles (e.g., title, authors, abstract) using a FastAPI service and SQLAlchemy ORM.
@@ -18,48 +18,78 @@ This project is designed to:
 | Frontend  | Power BI (planned)    |
 | Dev Tools | VSCode, Terminal      |
 
-🚀 Project Overview
-This project is designed to:
+---
 
-Retrieve academic article metadata (e.g., title, authors, abstract)
+## 🔧 Backend Setup
 
-Store the data in a PostgreSQL database
+### Prerequisites
+- Python 3.9+
+- PostgreSQL
+- Virtual environment (`venv` or `conda`)
 
-Use SQLAlchemy for ORM-based database interactions
+### Installation
 
-Set the stage for future analysis and frontend development
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/journal-analysis-project.git
+cd journal-analysis-project
 
-🛠️ Tech Stack
-Backend Framework: FastAPI
+# 2. Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-Database: PostgreSQL
+# 3. Install dependencies
+pip install -r requirements.txt
+```
 
-ORM: SQLAlchemy
+### PostgreSQL Setup
 
-Development Tools: VSCode + Terminal
+1. Install PostgreSQL and create a database (e.g., `journal_db`)
+2. Add your DB credentials in a `.env` file:
 
+```
+DATABASE_URL=postgresql://username:password@localhost/journal_db
+```
 
-📂 Project Structure (so far)
-pgsql
-Copy
-Edit
+### Run the API
+
+```bash
+uvicorn app.main:app --reload
+```
+
+---
+
+## 🧱 Project Structure
+
+```
 journal-analysis-project/
 ├── app/
-│   ├── main.py
-│   ├── models.py
-│   ├── schemas.py
-│   ├── crud.py
-│   └── database.py
+│   ├── main.py          # FastAPI entry point
+│   ├── models.py        # SQLAlchemy models
+│   ├── schemas.py       # Pydantic schemas
+│   ├── crud.py          # DB logic
+│   └── database.py      # DB connection
 ├── requirements.txt
 └── README.md
+```
 
-✅ To-Do / Roadmap
- Set up FastAPI + PostgreSQL connection
+---
 
- Add article retrieval endpoint
+## 📊 Frontend: Power BI (Planned)
 
- Implement article parsing and validation
+The frontend will be built using Power BI to:
+- Visualize article trends and metadata insights
+- Connect to the PostgreSQL backend
+- Provide filtering by author, keyword, source, etc.
 
- Expand database schema for additional metadata
+*(Power BI setup instructions will be added when development begins.)*
 
- Build frontend (TBD)
+---
+
+## 🚧 Roadmap
+
+- [x] Backend FastAPI + DB setup
+- [ ] Implement article ingestion endpoint
+- [ ] Expand DB schema (e.g., keywords, citations)
+- [ ] Develop Power BI reports
+- [ ] Automate data refresh pipeline
