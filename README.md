@@ -83,7 +83,7 @@ The frontend will be built using Tableau and then upgraded to Apache Superset (p
 - Provide filtering by author, keyword, source, etc.
 
 Check out the interactive version on Tableau Public:  
-👉 [View Dashboard]([https://public.tableau.com/app/profile/your-username/viz/your-dashboard-name](https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard1))
+👉 [View Dashboard]([https://public.tableau.com/app/profile/your-username/viz/your-dashboard-name](https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard1)
 
 *(Apache Superset setup instructions will be added when development begins.)*
 
