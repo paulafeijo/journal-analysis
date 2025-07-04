@@ -1,48 +1,58 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *.so
-
-# Virtual environments
-venv/
-env/
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# VS Code and PyCharm settings
-.vscode/
-.idea/
-
-# Mac & Linux
-.DS_Store
-
-# Logs and temporary files
+*.egg-info/
 *.log
 *.tmp
+*.DS_Store
 
-# Unit test cache
-.pytest_cache/
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
 
-# MyPy and other analysis tools
-.mypy_cache/
-.dmypy.json
-.pyre/
+# Jupyter and IPython
+.ipynb_checkpoints/
 
-# Data files and exports (custom)
-data/raw/
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Tableau
+*.twb~
+*.bak
+*.tds
+*.tdsx
+*.hyper
+
+# Data files
 *.csv
 *.tsv
-*.json
+*.xls
 *.xlsx
+*.json
+*.parquet
+*.feather
+*.h5
+*.db
+*.sqlite
 
-# Notebooks outputs (optional)
-*.nbconvert.ipynb
+# Keep important dashboard JSON if needed
+!dashboard/README.md
+!dashboard/dashboard.twbx
 
-# Environment configs
-.env
-.env.*
+# Ignore massive JSON outputs
+dashboard/df_final.json
+data_fetching/data/*.json
+data_fetching/data/*.txt
 
-# OS-generated files
-Thumbs.db
-ehthumbs.db
+# Ignore outputs / temp folders
+output/
+cache/
+build/
+dist/
