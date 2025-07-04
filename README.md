@@ -75,14 +75,17 @@ journal-analysis-project/
 
 ---
 
-## 📊 Frontend: Power BI (Planned)
+## 📊 Frontend: Tableau
 
-The frontend will be built using Power BI to:
+The frontend will be built using Tableau and then upgraded to Apache Superset (planned) to:
 - Visualize article trends and metadata insights
 - Connect to the PostgreSQL backend
 - Provide filtering by author, keyword, source, etc.
 
-*(Power BI setup instructions will be added when development begins.)*
+Check out the interactive version on Tableau Public:  
+👉 [View Dashboard](https://public.tableau.com/app/profile/your-username/viz/your-dashboard-name)
+
+*(Apache Superset setup instructions will be added when development begins.)*
 
 ---
 
