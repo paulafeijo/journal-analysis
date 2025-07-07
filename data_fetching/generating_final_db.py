@@ -89,7 +89,7 @@ df_final['journal_author'].value_counts()
 
 # === Save final database ===
 
-output_path = os.path.join(issn_dir, f"final_database_{issn}.json")
+output_path = os.path.join(issn_dir, f"final_database.json")
 df_final.to_json(output_path, orient="records", lines=True)
 print(f"\n💾 Final database saved to: {output_path}")
 
