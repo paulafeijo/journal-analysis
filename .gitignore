@@ -1,1 +1,45 @@
-data_fetching/data/author_publications_0169-4332_2020_2024.json
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.log
+*.tmp
+*.DS_Store
+.DS_Store 
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Jupyter and IPython
+.ipynb_checkpoints/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Tableau
+*.twb~
+*.bak
+*.tds
+*.tdsx
+*.hyper
+
+# Keep important dashboard JSON if needed
+!dashboard/README.md
+!dashboard/dashboard.twbx
+
+# Ignore massive JSON outputs
+data_fetching/data/
+
+# Ignore outputs / temp folders
+output/
+cache/
+build/
+dist/
