@@ -5,9 +5,11 @@ from datetime import datetime
 from tqdm import tqdm
 import json
 import os
+import sys
 
 # === Configuration ===
-issn = input("Enter ISSN (e.g. 0169-4332): ").strip()
+base_issn = sys.stdin.read().strip()
+
 rows = 1000
 api_url = "https://api.crossref.org/works"
 email = "paulafmed@gmail.com"
@@ -20,7 +22,7 @@ until_date = f"{last_year}-12-31"
 
 # === File paths and load data ===
 base_dir = os.path.join("data_fetching", "data")
-issn_dir = os.path.join(base_dir, issn)
+issn_dir = os.path.join(base_dir, base_issn)
 os.makedirs(issn_dir, exist_ok=True)
 
 output_path = os.path.join(issn_dir, f"articles.json")
@@ -35,11 +37,11 @@ def fetch_articles():
     page_count = 0
     pbar = None  # initialize progress bar
 
-    print(f"🔍 Fetching DOIs for ISSN {issn} from {from_date} to {until_date}...\n")
+    print(f"🔍 Fetching DOIs for ISSN {base_issn} from {from_date} to {until_date}...\n")
 
     while True:
         params = {
-            "filter": f"issn:{issn},from-pub-date:{from_date},until-pub-date:{until_date}",
+            "filter": f"issn:{base_issn},from-pub-date:{from_date},until-pub-date:{until_date}",
             "rows": rows,
             "cursor": cursor,
             "mailto": email
@@ -61,7 +63,7 @@ def fetch_articles():
         if total_results is None:
             total_results = message.get("total-results", 0)
             print(f"🔢 Estimated total results: {total_results}\n")
-            pbar = tqdm(total=total_results, desc=f"📦 Fetching {issn}", unit="record", dynamic_ncols=True)
+            pbar = tqdm(total=total_results, desc=f"📦 Fetching {base_issn}", unit="record", dynamic_ncols=True)
 
         if not items:
             break
@@ -79,7 +81,7 @@ def fetch_articles():
                 "doi": doi,
                 "published_date": pub_date,
                 "issn": ", ".join(issns),
-                "type": article_type
+                "type": article_type,
             })
 
         if pbar:
@@ -112,11 +114,12 @@ print(f"\n💾 Saved data to {output_path}")
 
 # (Optional) Save metadata
 metadata = {
-    "issn": issn,
+    "issn": base_issn,
     "from_year": from_year,
     "until_year": last_year,
-    "retrieved_on": today.strftime("%Y-%m-%d")
+    "retrieved_on": today.strftime("%Y-%m-%d"),
 }
+
 with open(metadata_path, "w") as f:
     json.dump(metadata, f, indent=4)
 print(f"🗃️ Saved metadata to {metadata_path}")

@@ -3,28 +3,27 @@ import os
 import requests
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import sys
 
 # --- CONFIG ---
 MAX_WORKERS = 10
 OPENALEX_API = "https://api.openalex.org/works/https://doi.org/"
 CROSSREF_API = "https://api.crossref.org/works/"
-issn = input("Enter ISSN (e.g. 0169-4332): ").strip()
+base_issn = sys.stdin.read().strip()
 
 # --- File Paths ---
-issn_dir = os.path.join("data_fetching", "data", issn)
-citations_path = os.path.join(issn_dir, "citations.jsonl")
-references_path = os.path.join(issn_dir, "references.jsonl")
+issn_dir = os.path.join("data_fetching", "data", base_issn)
+citations_path = os.path.join(issn_dir, "citations.json")
+references_path = os.path.join(issn_dir, "references.json")
 
 # --- Load citation and reference links ---
-df_citations = pd.read_json(citations_path, lines=True)
-df_references = pd.read_json(references_path, lines=True)
+df_citations = pd.read_json(citations_path)
+df_references = pd.read_json(references_path)
 
 # --- Collect unique DOIs to resolve ---
 unique_dois = pd.concat([df_citations['related_doi'], df_references['related_doi']]).dropna().unique()
 
 # --- Resolve DOIs to journal names ---
-CROSSREF_API = "https://api.crossref.org/works/"
-
 def get_journal_for_doi(doi):
     # Try Crossref first
     try:
@@ -70,7 +69,7 @@ with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         if result:
             journal_map.append(result)
 
-df_journal_map = pd.DataFrame(journal_map).dropna()
+df_journal_map = pd.DataFrame(journal_map)
 
 # --- Merge journal names into references and citations ---
 df_citations = df_citations.merge(df_journal_map, left_on='related_doi', right_on='doi', how='left')
@@ -86,7 +85,7 @@ df_combined['total_score'] = df_combined['citations'] + df_combined['references'
 df_combined = df_combined.sort_values(by='total_score', ascending=False)
 
 # --- Top 10 Competitor Journals (excluding base journal) ---
-df_filtered = df_combined[df_combined['issn'] != issn]
+df_filtered = df_combined[~df_combined['issn'].fillna("").str.contains(base_issn)]
 top_10 = df_filtered.head(10)
 
 print("\n🏆 Top 10 Competitor Journals (excluding base journal):\n")

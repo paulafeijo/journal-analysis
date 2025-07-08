@@ -5,6 +5,7 @@ import json
 import time
 from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
+import sys
 
 # === Constants ===
 HEADERS = {"User-Agent": "mailto:paulafmed@gmail.com"}
@@ -13,37 +14,13 @@ MAX_WORKERS = 30
 RETRIES = 3
 RETRY_DELAY = 2  # seconds
 
-# === Region Mapping ===
-REGION_MAP = {
-    "China (CN)": ["CN"],
-    "Korea & India": ["KR", "IN"],
-    "High-Income Research Countries": [
-        "US", "JP", "DE", "FR", "GB", "IT", "ES", "CA", "AU", "CH", "NL", "BE", "SE", "SG",
-        "AT", "FI", "DK", "IE", "NO", "IL"
-    ],
-    "Emerging/Transition Countries": [
-        "RU", "PL", "CZ", "BR", "MX", "IR", "TR", "RO", "SK", "VN", "TH", "AR", "PK", "HU",
-        "PT", "SA", "QA", "AE", "MY", "HK", "CL", "EG", "ZA", "GR", "BG", "ID", "UA", "KZ",
-        "RS", "SI", "CO", "DZ", "PE", "VE", "UY", "EE", "PH", "JO", "NZ", "LU", "HR", "LV",
-        "LT", "MO", "OM", "IQ", "IS", "BD", "ET", "TN", "LK", "LB", "KW", "CM", "MT", "FJ", "PR"
-    ],
-    "Other": []
-}
-
-def classify_region(country_code):
-    for region, countries in REGION_MAP.items():
-        if country_code in countries:
-            return region
-    return "Other"
-
 # === Prompt for base ISSN ===
-base_issn = input("Enter base ISSN (e.g. 0169-4332): ").strip()
+base_issn = sys.stdin.read().strip()
 base_dir = os.path.join("data_fetching", "data", base_issn)
-competitors_path = os.path.join(base_dir, "competitors_citations.json")
+competitors_path = os.path.join(base_dir, "top_competitors.json")
 
 # === Read competitor ISSNs ===
 df_competitors = pd.read_json(competitors_path)
-df_competitors = df_competitors.sort_values(by="total_score", ascending=False).head(10)
 competitor_issns = df_competitors["issn"].dropna().unique()
 
 # === Author Fetch Function with Retries ===
@@ -74,7 +51,6 @@ def fetch_author_data(row):
                         "orcid": info.get("orcid"),
                         "affiliation": institutions[0].get("display_name") if institutions else None,
                         "country": country,
-                        "region": classify_region(country),
                         "author_id": info.get("id")
                     })
 

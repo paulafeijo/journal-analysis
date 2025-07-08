@@ -5,6 +5,7 @@ import logging
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
+import sys
 
 # === Configuration ===
 HEADERS = {"User-Agent": "mailto:paulafmed@gmail.com"}  # <-- Use your actual email
@@ -15,8 +16,9 @@ RETRY_DELAY = 2  # seconds
 failed_dois = []
 
 # === File paths and load data ===
-issn = input("Enter ISSN (e.g. 0169-4332): ").strip()
-data_dir = os.path.join("data_fetching", "data", issn)
+base_issn = sys.stdin.read().strip()
+
+data_dir = os.path.join("data_fetching", "data", base_issn)
 os.makedirs(data_dir, exist_ok=True)
 
 input_path = os.path.join(data_dir, f"articles.json")
@@ -70,41 +72,15 @@ def fetch_all_authors(df_articles):
             all_author_data.extend(future.result())
     return pd.DataFrame(all_author_data)
 
-
-# === Region Mapping ===
-REGION_MAP = {
-    "China (CN)": ["CN"],
-    "Korea & India": ["KR", "IN"],
-    "High-Income Research Countries": [
-        "US", "JP", "DE", "FR", "GB", "IT", "ES", "CA", "AU", "CH", "NL", "BE", "SE", "SG",
-        "AT", "FI", "DK", "IE", "NO", "IL"
-    ],
-    "Emerging/Transition Countries": [
-        "RU", "PL", "CZ", "BR", "MX", "IR", "TR", "RO", "SK", "VN", "TH", "AR", "PK", "HU",
-        "PT", "SA", "QA", "AE", "MY", "HK", "CL", "EG", "ZA", "GR", "BG", "ID", "UA", "KZ",
-        "RS", "SI", "CO", "DZ", "PE", "VE", "UY", "EE", "PH", "JO", "NZ", "LU", "HR", "LV",
-        "LT", "MO", "OM", "IQ", "IS", "BD", "ET", "TN", "LK", "LB", "KW", "CM", "MT", "FJ", "PR"
-    ],
-    "Other": []  # Fallback
-}
-
-def classify_region(country_code):
-    for region, countries in REGION_MAP.items():
-        if country_code in countries:
-            return region
-    return "Other"
-
-
 # === Run Script ===
 if __name__ == "__main__":
-    print(f"🔍 Fetching author information for ISSN {issn}...\n")
+    print(f"🔍 Fetching author information for ISSN {base_issn}...\n")
 
     df_authors = fetch_all_authors(df_articles)
 
     print(f"\n📄 Fetched author data for {len(df_articles)} articles.")
     print(f"❌ Failed DOIs after retries: {len(failed_dois)}\n")
 
-    df_authors["region"] = df_authors["country"].apply(classify_region)
     df_authors.info()
 
     # Save authors

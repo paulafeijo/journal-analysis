@@ -1,9 +1,22 @@
 import os
 import pandas as pd
 import json
+import sys
 
-base_issn = input("Enter base ISSN (e.g. 0169-4332): ").strip()
+
+base_issn = sys.stdin.read().strip()
 data_dir = os.path.join("data_fetching", "data", base_issn)
+final_database_path = os.path.join(data_dir, "final_database.json")
+try:
+    df_final = pd.read_json(final_database_path, lines=True)
+    journals_df = df_final[['issn', 'journal']].drop_duplicates()
+except Exception as e:
+    print(f"Warning: Could not load journals from final_database.json: {e}")
+    journals_df = pd.DataFrame()
+
+df_competitors = pd.read_json(os.path.join(data_dir, "top_competitors.json"))
+top_competitors = df_competitors.sort_values(by="total_score", ascending=False).head(10)
+competitor_issns = top_competitors['issn'].dropna().unique()
 
 # === fetch_articles.py ===
 base_articles_path = os.path.join(data_dir, "articles.json")
@@ -23,20 +36,41 @@ num_total_dois = len(df_articles)
 error_percent_authors = (num_failed_authors / num_total_dois) * 100 if num_total_dois else 0
 
 # === fetch_competitor_articles.py ===
-failed_issns_path = os.path.join(data_dir, "failed_issns.txt")
-empty_issns_path = os.path.join(data_dir, "empty_issns.txt")
+# Compute how many competitor articles were successfully fetched in total
+comp_articles_total = 0
+comp_articles_missing = 0
 
-failed_issns = open(failed_issns_path).read().splitlines() if os.path.exists(failed_issns_path) else []
-empty_issns = open(empty_issns_path).read().splitlines() if os.path.exists(empty_issns_path) else []
+for issn in competitor_issns:
+    comp_dir = os.path.join("data_fetching", "data", issn)
+    articles_path = os.path.join(comp_dir, "articles.json")
+    
+    if os.path.exists(articles_path):
+        df = pd.read_json(articles_path, lines=True)
+        comp_articles_total += len(df)
+    else:
+        comp_articles_missing += 1  # or log missing ISSN if needed
 
-total_competitors = 10  # assuming you always fetch top 10 competitors
-num_issues = len(set(failed_issns + empty_issns))
-error_percent_comp_articles = (num_issues / total_competitors) * 100 if total_competitors else 0
+error_percent_comp_articles = 0
+if comp_articles_total + comp_articles_missing > 0:
+    error_percent_comp_articles = (comp_articles_missing / (comp_articles_total + comp_articles_missing)) * 100
+
 
 # === fetch_competitor_authors.py ===
-df_competitors = pd.read_json(os.path.join(data_dir, "top_competitors.json"))
-top_competitors = df_competitors.sort_values(by="total_score", ascending=False).head(10)
-competitor_issns = top_competitors['issn'].dropna().unique()
+def get_journal_name_from_journals_df(issn, df_journals, df_top_competitors):
+    if not df_journals.empty and 'issn' in df_journals.columns and 'journal' in df_journals.columns:
+        match = df_journals[df_journals['issn'] == issn]
+        if not match.empty:
+            journal = match.iloc[0]['journal']
+            return journal if pd.notna(journal) else "Unknown"
+
+    
+    # fallback: check top_competitors.json
+    if 'issn' in df_top_competitors.columns and 'journal' in df_top_competitors.columns:
+        match = df_top_competitors[df_top_competitors['issn'] == issn]
+        if not match.empty:
+            return match.iloc[0]['journal']
+
+    return "Unknown"
 
 comp_author_rows = []
 for issn in competitor_issns:
@@ -58,8 +92,8 @@ for issn in competitor_issns:
     num_failed_comp_authors = len(failed_comp_dois)
     error_percent = (num_failed_comp_authors / total_comp_dois) * 100 if total_comp_dois else 100
 
-    journal_name = df_competitors[df_competitors['issn'] == issn]['journal'].values[0] if issn in df_competitors['issn'].values else "Unknown"
-
+    journal_name = get_journal_name_from_journals_df(issn, journals_df, df_competitors)
+    
     comp_author_rows.append({
         "object": journal_name,
         "issn": issn,
@@ -88,8 +122,8 @@ rows = [
     {
         "object": "competitor articles",
         "issn": "all below", 
-        "total": total_competitors,
-        "failed": num_issues,
+        "total": comp_articles_total + comp_articles_missing,
+        "failed": comp_articles_missing,
         "error_percent": round(error_percent_comp_articles, 2)
     },
     {

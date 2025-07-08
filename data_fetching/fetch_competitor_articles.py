@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 from tqdm import tqdm
 import json
+import sys
 
 # === Config ===
 api_url = "https://api.crossref.org/works"
@@ -12,7 +13,7 @@ email = "paulafmed@gmail.com"
 today = datetime.today()
 
 # === Load base ISSN ===
-base_issn = input("Enter base ISSN (e.g. 0169-4332): ").strip()
+base_issn = sys.stdin.read().strip()
 base_dir = os.path.join("data_fetching", "data", base_issn)
 
 # === Read metadata to get date range ===
@@ -26,10 +27,8 @@ from_date = f"{from_year}-01-01"
 until_date = f"{until_year}-12-31"
 
 # === Read competitor ISSNs ===
-competitor_path = os.path.join(base_dir, "competitors_citations.json")
+competitor_path = os.path.join(base_dir, "top_competitors.json")
 df_competitors = pd.read_json(competitor_path)
-df_competitors = df_competitors.sort_values(by="total_score", ascending=False).head(10)
-
 
 # === Error tracking lists ===
 failed_issns = []
