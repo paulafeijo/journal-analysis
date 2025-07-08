@@ -1,98 +1,83 @@
 # 🧠 Journal Analysis Project
 
-A full-stack data pipeline for retrieving, storing, and analyzing academic article metadata — powered by **FastAPI**, **PostgreSQL**, and a **Power BI** dashboard.
+A data pipeline for retrieving, analyzing, and visualizing academic journal metadata — using data from **Crossref** and **OpenAlex**, with a focus on **institutional research trends**, and presented through an interactive **Tableau** dashboard.
 
 ## 📌 Overview
 
-This project is designed to:
-- **Backend**: Extract and store metadata from academic articles (e.g., title, authors, abstract) using a FastAPI service and SQLAlchemy ORM.
-- **Database**: Store structured metadata in a PostgreSQL database.
-- **Frontend**: Visualize insights via an interactive Power BI dashboard (planned).
+This project is focused on:
+- **Collecting** academic metadata from **Crossref** and **OpenAlex** APIs  
+- **Storing** structured raw data in **JSON** format  
+- **Analyzing** institutional-level publication and citation patterns using clustering techniques  
+- **Visualizing** key insights in a **Tableau dashboard** for exploration  
+- **Generating leads** by identifying high-output or emerging institutions in specific research areas
+
+The **main goal** is to use these insights to **develop a model that generates institutional leads** for strategic or commercial purposes.
+
+## ✅ Current Progress
+
+- ✅ Fetched articles, authors, affiliations, and citation data from **Crossref** and **OpenAlex**  
+- ✅ Saved metadata to structured **JSON** files  
+- ✅ Performed clustering analysis to identify institutional publishing trends  
+- ✅ Published an interactive **Tableau dashboard** highlighting top institutions, citation networks, and research clusters  
 
 ## 🛠 Tech Stack
 
-| Layer     | Tech                  |
-|-----------|-----------------------|
-| Backend   | FastAPI, SQLAlchemy   |
-| Database  | PostgreSQL            |
-| Frontend  | Power BI (planned)    |
-| Dev Tools | VSCode, Terminal      |
+| Stage        | Tools/Libraries                             |
+|--------------|---------------------------------------------|
+| Data Fetch   | Python, Requests, Crossref API, OpenAlex API |
+| Storage      | JSON files                                  |
+| Analysis     | Pandas, NumPy, Scikit-learn                 |
+| Visualization| Tableau Public                              |
+| Dev Tools    | Jupyter, VSCode, Terminal                   |
 
 ---
 
-## 🔧 Backend Setup
-
-### Prerequisites
-- Python 3.9+
-- PostgreSQL
-- Virtual environment (`venv` or `conda`)
-
-### Installation
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/journal-analysis-project.git
-cd journal-analysis-project
-
-# 2. Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
-```
-
-### PostgreSQL Setup
-
-1. Install PostgreSQL and create a database (e.g., `journal_db`)
-2. Add your DB credentials in a `.env` file:
+## 🗂 Project Structure
 
 ```
-DATABASE_URL=postgresql://username:password@localhost/journal_db
-```
-
-### Run the API
-
-```bash
-uvicorn app.main:app --reload
-```
-
----
-
-## 🧱 Project Structure
-
-```
-journal-analysis-project/
-├── app/
-│   ├── main.py          # FastAPI entry point
-│   ├── models.py        # SQLAlchemy models
-│   ├── schemas.py       # Pydantic schemas
-│   ├── crud.py          # DB logic
-│   └── database.py      # DB connection
+journal-analysis/
+├── dashboard/
+│   └── dashboard.twbx                 # Tableau dashboard file
+├── data_analysis/
+│   └── clustering.py                  # Cluster analysis script
+├── data_fetching/
+│   ├── data/                          # Stored JSON data
+│   ├── error_tracking.py
+│   ├── fetch_articles.py
+│   ├── fetch_authors.py
+│   ├── fetch_competitor_articles.py
+│   ├── fetch_competitor_authors.py
+│   ├── generating_final_db.py         # Final data merge
+│   ├── main_script.py                 # Pipeline orchestrator
+│   ├── references_citations.py
+│   └── top_competitors_citations.py
+├── LICENSE
+├── README.md
 ├── requirements.txt
-└── README.md
+└── venv/                              # Local virtual environment
 ```
 
 ---
 
-## 📊 Frontend: Tableau
+## 📊 Tableau Dashboard
 
-The frontend will be built using Tableau and then upgraded to Apache Superset (planned) to:
-- Visualize article trends and metadata insights
-- Connect to the PostgreSQL backend
-- Provide filtering by author, keyword, source, etc.
+The dashboard visualizes institutional publishing patterns by showing:
+- Top contributing institutions over time  
+- Co-authorship and citation networks  
+- Clustered research areas and collaborations  
+- Filters for journal, year, and field  
 
-Check out the interactive version on Tableau Public:  
-👉 [View Dashboard]([https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard1])(https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard1)
-
-*(Apache Superset setup instructions will be added when development begins.)*
+🔗 [**View the Tableau Dashboard**](https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard1)
 
 ---
 
 ## 🚧 Roadmap
 
-- [x] Backend FastAPI + DB setup
-- [ ] Implement article ingestion endpoint
-- [ ] Expand DB schema (e.g., keywords, citations)
-- [ ] Develop Power BI reports
-- [ ] Automate data refresh pipeline
+- [x] Fetch metadata from Crossref/OpenAlex  
+- [x] Store raw data in JSON format  
+- [x] Perform cluster analysis on institutions  
+- [x] Publish Tableau dashboard  
+- [ ] Expand clustering features (e.g., keyword embeddings)  
+- [ ] Automate refresh and update cycle  
+- [ ] **Develop institutional lead generation model** based on clustering + output metrics  
+- [ ] Explore open-source dashboard alternatives (e.g., Superset)  
