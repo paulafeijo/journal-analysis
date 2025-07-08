@@ -67,7 +67,7 @@ The dashboard visualizes institutional publishing patterns by showing:
 - Clustered research areas and collaborations  
 - Filters for journal, year, and field  
 
-🔗 [**View the Tableau Dashboard**]([https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard1](https://public.tableau.com/views/dashboard_17516543242160/Dashboard?:language=pt-BR&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link))
+🔗 [**View the Tableau Dashboard**](https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard)
 
 ---
 
