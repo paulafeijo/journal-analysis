@@ -112,7 +112,7 @@ if __name__ == "__main__":
 df_articles.to_json(output_path, orient="records", lines=True)
 print(f"\n💾 Saved data to {output_path}")
 
-# (Optional) Save metadata
+# Save metadata
 metadata = {
     "issn": base_issn,
     "from_year": from_year,
@@ -123,3 +123,4 @@ metadata = {
 with open(metadata_path, "w") as f:
     json.dump(metadata, f, indent=4)
 print(f"🗃️ Saved metadata to {metadata_path}")
+# 
