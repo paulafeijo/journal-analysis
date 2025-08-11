@@ -1,4 +1,4 @@
-# Journal Analysis Data Fetchin – Main Script
+# Journal Analysis Data Fetching – Main Script
 
 ## Overview
 
