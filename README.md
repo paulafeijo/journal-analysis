@@ -1,38 +1,48 @@
-# 🧠 Journal Analysis Project
+# Journal Analysis
 
-A data pipeline for retrieving, analyzing, and visualizing academic journal metadata — using data from **Crossref** and **OpenAlex**, with a focus on **institutional research trends**, and presented through an interactive **Tableau** dashboard.
+A complete **data pipeline** for retrieving, analyzing, and visualizing academic journal metadata — using data from **Crossref** and **OpenAlex**, with a focus on **institutional research trends**, and presented through an interactive **Tableau** dashboard.
 
-## 📌 Overview
+> **For detailed documentation, visit the project's wiki:** \
+> https://github.com/paulafeijo/journal-analysis/wiki
+
+
+## Overview
 
 This project is focused on:
-- **Collecting** academic metadata from **Crossref** and **OpenAlex** APIs  
-- **Storing** structured raw data in **JSON** format  
-- **Analyzing** institutional-level publication and citation patterns using clustering techniques  
-- **Visualizing** key insights in a **Tableau dashboard** for exploration  
-- **Generating leads** by identifying high-output or emerging institutions in specific research areas
+- **Collecting** academic metadata from **Crossref** and **OpenAlex** APIs (articles, authors, institutions, citations).
+- **Storing** structured raw data in **JSON** format. 
+- **Analyzing** institutional-level publication and citation patterns using clustering techniques. 
+- **Visualizing** key insights in a **Tableau dashboard** for exploration.
+- **Generating leads** by identifying high-output or emerging institutions in specific research areas.
 
-The **main goal** is to use these insights to **develop a model that generates institutional leads** for strategic or commercial purposes.
+**Goal:** build a model that can **recomment institutionss** for strategic partnerships, collaborations, or commercial outreach based on research output and trends.
 
-## ✅ Current Progress
 
-- ✅ Fetched articles, authors, affiliations, and citation data from **Crossref** and **OpenAlex**  
-- ✅ Saved metadata to structured **JSON** files  
-- ✅ Performed clustering analysis to identify institutional publishing trends  
-- ✅ Published an interactive **Tableau dashboard** highlighting top institutions, citation networks, and research clusters  
+## Current Features
 
-## 🛠 Tech Stack
+- Automated retrieval of articles, authors, affiliations, and citation data from **Crossref**, **OpenAlex** and **OpenCitations**.
+- Structured storage of metadata in JSON files.
+- Institutional trend analysis using **clustering algorithms**.
+- **Tableau dashboard** displaying:
+  - Top institutions by publication volume.
+  - Citation and co-authorship networks.
+  - Clusters of research topics and collaborations.
 
-| Stage        | Tools/Libraries                             |
-|--------------|---------------------------------------------|
-| Data Fetch   | Python, Requests, Crossref API, OpenAlex API |
-| Storage      | JSON files                                  |
-| Analysis     | Pandas, NumPy, Scikit-learn                 |
-| Visualization| Tableau Public                              |
-| Dev Tools    | Jupyter, VSCode, Terminal                   |
 
----
+## Tech Stack
 
-## 🗂 Project Structure
+| Stage           | Tools/Libraries                                                 |
+|-----------------|-----------------------------------------------------------------|
+| Data Fetching   | Python, Requests, Crossref API, OpenAlex API, OpenCitations API |
+| Storage         | JSON files                                                      |
+| Analysis        | Pandas, NumPy, Scikit-learn                                     |
+| Visualization   | Tableau Public                                                  |
+| Dev Tools       | VSCode, Terminal                                                |
+
+
+
+
+## Project Structure
 
 ```
 journal-analysis/
@@ -47,7 +57,7 @@ journal-analysis/
 │   ├── fetch_authors.py
 │   ├── fetch_competitor_articles.py
 │   ├── fetch_competitor_authors.py
-│   ├── generating_final_db.py         # Final data merge
+│   ├── generating_final_db.py         
 │   ├── main_script.py                 # Pipeline orchestrator
 │   ├── references_citations.py
 │   └── top_competitors_citations.py
@@ -57,11 +67,11 @@ journal-analysis/
 └── venv/                              # Local virtual environment
 ```
 
----
 
-## 📊 Tableau Dashboard
 
-The dashboard visualizes institutional publishing patterns by showing:
+## Tableau Dashboard
+
+The interactive dashboard visualizes institutional publishing patterns by showing:
 - Top contributing institutions over time  
 - Co-authorship and citation networks  
 - Clustered research areas and collaborations  
@@ -69,15 +79,23 @@ The dashboard visualizes institutional publishing patterns by showing:
 
 🔗 [**View the Tableau Dashboard**](https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard)
 
----
 
-## 🚧 Roadmap
+
+## Roadmap
 
 - [x] Fetch metadata from Crossref/OpenAlex  
 - [x] Store raw data in JSON format  
 - [x] Perform cluster analysis on institutions  
 - [x] Publish Tableau dashboard  
-- [ ] Expand clustering features (e.g., keyword embeddings)  
-- [ ] Automate refresh and update cycle  
 - [ ] **Develop institutional lead generation model** based on clustering + output metrics  
 - [ ] Explore open-source dashboard alternatives (e.g., Superset)  
+
+## Improvement backlog
+- Migrate database to SQL.
+- Uptade datafetching scripts to consult existing database before fetching via API.
+- Automade data refresh cycle.
+- Add keyword embeddings for topic clustering
+
+## License
+This project is licensed under the MIT License.
+
