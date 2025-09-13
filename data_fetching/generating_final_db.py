@@ -58,20 +58,23 @@ print(f"\n📚 Combined author records (base + competitors): {len(df_final)}")
 
 # === Region classification ===
 REGION_MAP = {
-    "China (CN)": ["CN"],
-    "Korea & India": ["KR", "IN"],
-    "High-Income Research Countries": [
-        "US", "JP", "DE", "FR", "GB", "IT", "ES", "CA", "AU", "CH", "NL", "BE", "SE", "SG",
-        "AT", "FI", "DK", "IE", "NO", "IL"
+    "Europe (OpenAPC strong)": [
+        "DE","GB","FR","IT","ES","NL","SE","FI","NO","DK","AT","BE","CH","IE",
+        "PL","CZ","PT","GR","HU","SI","SK","EE","LV","LT","RO","BG","HR","LU","IS"
     ],
-    "Emerging/Transition Countries": [
-        "RU", "PL", "CZ", "BR", "MX", "IR", "TR", "RO", "SK", "VN", "TH", "AR", "PK", "HU",
-        "PT", "SA", "QA", "AE", "MY", "HK", "CL", "EG", "ZA", "GR", "BG", "ID", "UA", "KZ",
-        "RS", "SI", "CO", "DZ", "PE", "VE", "UY", "EE", "PH", "JO", "NZ", "LU", "HR", "LV",
-        "LT", "MO", "OM", "IQ", "IS", "BD", "ET", "TN", "LK", "LB", "KW", "CM", "MT", "FJ", "PR"
+    "US & Canada": ["US","CA"],
+    "China": ["CN"],  # Optionally add "HK","MO"
+    "Latin America": [
+        "BR","MX","AR","CL","CO","PE","UY","VE","CR","EC","PA","BO","PY",
+        "SV","GT","HN","NI","DO","PR"
+    ],
+    "Asia-Pacific (ex-China)": ["JP","KR","IN","SG","AU","NZ","TW","TH","VN","MY","ID","PH"],
+    "Middle East & Africa": [
+        "IL","SA","AE","QA","KW","OM","EG","ZA","MA","TN","KE","NG","GH","ET"
     ],
     "Other": []
 }
+
 
 def classify_region(country_code):
     for region, countries in REGION_MAP.items():
