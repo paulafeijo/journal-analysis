@@ -65,3 +65,56 @@ Crossref Journals API — resolves journal titles from ISSNs: https://api.crossr
 - Standard library: `os`, `sys`, `time`, `json`.
 
 
+---
+
+## Rationale for the APC-driven Region Classification
+
+The regions were not chosen by geography or business convention (e.g., APAC, EMEA, AMER), but instead reflect **differences in how APCs are funded, reported, and managed** across the world. This makes them more meaningful for institutional lead generation.
+
+### 1. Europe (OpenAPC strong)
+
+- Europe has the highest transparency in APC reporting.
+
+- Many universities and consortia (DEAL in Germany, Jisc in the UK, Couperin in France, Bibsam in Sweden, etc.) openly publish APC expenditure.
+
+- Institutions often operate centralized OA funds, making them prime leads for APC-based outreach.
+
+### 2. US & Canada
+
+- Coverage in OpenAPC is sparse (only a handful of universities report).
+
+- However, US & Canadian institutions publish heavily OA, with APCs mostly covered by research grants (NIH, NSF, CIHR, etc.) or system-level deals (e.g., California Digital Library).
+
+- Funding is fragmented — important for targeting research-intensive universities directly.
+
+### 3. China
+
+- The world’s largest OA publisher base, but with no APC transparency (not in OpenAPC).
+
+- APCs are usually covered by national funding agencies (NSFC) or internal university research funds.
+
+- Treating China as a standalone region avoids it overwhelming the dataset and highlights its unique funding system.
+
+### 4. Latin America
+
+- Strong tradition of diamond OA (no APCs) via SciELO and Redalyc.
+
+- APC spending occurs mainly when researchers publish in international commercial journals (Elsevier, Springer, Frontiers, MDPI).
+
+- Payments often come from national agencies (CNPq, CAPES, CONACYT, etc.), not centralized library funds.
+
+### 5. Asia-Pacific (ex-China)
+
+- Includes Japan, Korea, India, Singapore, Australia, etc.
+
+- APCs typically covered by grant agencies (JSPS, NRF, ARC, etc.).
+
+- Transparency is limited, but OA publishing is strong, so institutions in this region are attractive for APC-based leads.
+
+### 6. Middle East & Africa
+
+- Patchy APC reporting, mostly absent in OpenAPC.
+
+- APCs are often paid via government initiatives (Saudi, UAE, Qatar) or research council support (South Africa, Egypt).
+
+- Lead strategy focuses on flagship institutions (KAUST, King Saud, Stellenbosch, Cape Town).
