@@ -9,36 +9,41 @@ A complete **data pipeline** for retrieving, analyzing, and visualizing academic
 ## Overview
 
 This project is focused on:
-- **Collecting** academic metadata from **Crossref** and **OpenAlex** APIs (articles, authors, institutions, citations).
-- **Storing** structured raw data in **JSON** format. 
-- **Analyzing** institutional-level publication and citation patterns using clustering techniques. 
-- **Visualizing** key insights in a **Tableau dashboard** for exploration.
-- **Generating leads** by identifying high-output or emerging institutions in specific research areas.
+- **Collecting** academic metadata from **Crossref** and **OpenAlex** (articles, authors, institutions, citations).
+- **Storing** structured raw data in **JSON** format.
+- **Enriching** article-level data with **OpenAPC payment and institution metadata**.
+- **Aggregating** to the **institution level**, building metrics such as OA percentage, growth rate, APC spend, and concentration indices.
+- **Analyzing** institutions using clustering techniques to detect publishing and funding patterns.
+- **Generating leads** by scoring and ranking institutions (Commitment, Ecosystem, Momentum, Openness).
+- **Visualizing** trends and insights in a **Tableau dashboard** for exploration.
 
-**Goal:** build a model that can **recomment institutionss** for strategic partnerships, collaborations, or commercial outreach based on research output and trends.
+**Goal:** build a model that can **recommend institutions** for strategic partnerships, collaborations, or commercial outreach based on research output, openness, and APC spending.
 
 
 ## Current Features
 
-- Automated retrieval of articles, authors, affiliations, and citation data from **Crossref**, **OpenAlex** and **OpenCitations**.
-- Structured storage of metadata in JSON files.
-- Institutional trend analysis using **clustering algorithms**.
-- **Tableau dashboard** displaying:
+- Automated retrieval of articles, authors, affiliations, and citation data from **Crossref**, **OpenAlex**, and **OpenCitations**.
+- **OpenAPC integration**: enrich article-level data with APC payments and institution metadata.
+- **Institutional database builder**: aggregating institution-level metrics (publications, OA share, APC spend, growth, concentration).
+- **Clustering analysis**: assign institutions to global research clusters.
+- **Lead generation model**: compute Lead Scores (0–100), tiers (High/Medium/Low), and agreement suggestions (TA / Waiver / Other).
+- **Tableau dashboard** with:
   - Top institutions by publication volume.
   - Citation and co-authorship networks.
-  - Clusters of research topics and collaborations.
+  - Regional and institutional cluster patterns.
+  - Ranked institutional leads.
 
 
 ## Tech Stack
 
-| Stage           | Tools/Libraries                                                 |
-|-----------------|-----------------------------------------------------------------|
-| Data Fetching   | Python, Requests, Crossref API, OpenAlex API, OpenCitations API |
-| Storage         | JSON files                                                      |
-| Analysis        | Pandas, NumPy, Scikit-learn                                     |
-| Visualization   | Tableau Public                                                  |
-| Dev Tools       | VSCode, Terminal                                                |
-
+| Stage             | Tools/Libraries                                                          |
+|-------------------|--------------------------------------------------------------------------|
+| Data Fetching     | Python, Requests, Crossref API, OpenAlex API, OpenCitations API          |
+| Enrichment        | OpenAPC CSVs, Pandas, NumPy                                              |
+| Analysis          | Pandas, NumPy, Scikit-learn (MiniBatchKMeans), HDBSCAN (optional)        |
+| Lead Generation   | Pandas, NumPy, domain-specific scoring model                             |
+| Visualization     | Tableau Public                                                           |
+| Dev Tools         | VSCode, Terminal, GitHub   
 
 
 
@@ -47,9 +52,12 @@ This project is focused on:
 ```
 journal-analysis/
 ├── dashboard/
-│   └── dashboard.twbx                 # Tableau dashboard file
+│   └── dashboard.twbx                 # Tableau dashboards
+│   └── dashboard-nova.twbx
 ├── data_analysis/
-│   └── clustering.py                  # Cluster analysis script
+│   └── institution_database.py        # Build institution-level dataset
+│   └── cluster.py                     # Cluster analysis script
+│   └── generate_leads.py              # Lead generation model
 ├── data_fetching/
 │   ├── data/                          # Stored JSON data
 │   ├── error_tracking.py
@@ -57,27 +65,26 @@ journal-analysis/
 │   ├── fetch_authors.py
 │   ├── fetch_competitor_articles.py
 │   ├── fetch_competitor_authors.py
+│   ├── fetch_openapc_info.py          # Enrich with OpenAPC
 │   ├── generating_final_db.py         
 │   ├── main_script.py                 # Pipeline orchestrator
 │   ├── references_citations.py
-│   └── top_competitors_citations.py
 ├── LICENSE
 ├── README.md
 ├── requirements.txt
 └── venv/                              # Local virtual environment
 ```
 
-
-
 ## Tableau Dashboard
 
 The interactive dashboard visualizes institutional publishing patterns by showing:
 - Top contributing institutions over time  
 - Co-authorship and citation networks  
-- Clustered research areas and collaborations  
-- Filters for journal, year, and field  
+- Regional clusters of institutions  
+- Lead generation outputs (tiers, scores, agreement suggestions)  
+- Filters for journal, year, and region  
 
-🔗 [**View the Tableau Dashboard**](https://public.tableau.com/app/profile/paula.feijo.de.medeiros6771/viz/dashboard_17516543242160/Dashboard)
+🔗 [**View the Tableau Dashboard**](https://public.tableau.com/views/dashboard_17516543242160/Dashboard)
 
 
 
@@ -85,16 +92,16 @@ The interactive dashboard visualizes institutional publishing patterns by showin
 
 - [x] Fetch metadata from Crossref/OpenAlex  
 - [x] Store raw data in JSON format  
-- [x] Perform cluster analysis on institutions  
-- [x] Publish Tableau dashboard  
-- [ ] **Develop institutional lead generation model** based on clustering + output metrics  
+- [x] Build final article-level database  
+- [x] Enrich with OpenAPC data  
+- [x] Aggregate to institution-level metrics  
+- [x] Perform clustering analysis  
+- [x] Develop lead generation model  
+- [x] Publish Tableau dashboards  
 - [ ] Explore open-source dashboard alternatives (e.g., Superset)  
-
-## Improvement backlog
-- Migrate database to SQL.
-- Uptade datafetching scripts to consult existing database before fetching via API.
-- Automade data refresh cycle.
-- Add keyword embeddings for topic clustering
+- [ ] Migrate storage to SQL for scalability  
+- [ ] Automate data refresh cycle  
+ 
 
 ## License
 This project is licensed under the MIT License.
